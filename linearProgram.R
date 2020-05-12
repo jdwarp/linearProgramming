@@ -1,16 +1,24 @@
+---
+  title: "Linear Programming 1"
+author: "Jaime Duran"
+date: "4/17/2020"
+output: html_document
+---
+  
 # Linear Programming: optimization problem
 
 ## let
 # T be the number of tables, C the number of chairs
 #
 # constraints
-# 2*T + 3*C ≤ 6000    -- labor constraint, 6000 hrs available/wk
-# 3*T + 2*C ≤ 9000   -- wood constraint, 9000 ft2 available/wk
+# 2*T + 3*C <= 6000    -- labor constraint, 6000 hrs available/wk
+# 3*T + 2*C <= 9000   -- wood constraint, 9000 ft2 available/wk
 
 #Profit:  $12T + $10C – find values of T and C, within 
 #the constraints that maximize profit
 
 #Plot the constraints:
+
 
 plot(0,0, xlim=c(0,1500), ylim=c(0,1200), pch='.', ylab='tables', xlab='chairs')
 
@@ -88,5 +96,91 @@ print(TCsolution2$solution)
 #    3x + y >= 10, 
 #     x + y >= 5, 
 #     x     >= 3
+ 
+# solve our X and Y:
+f.obj = c(6, 5)
+f.con = matrix(c(3, 1, 1, 1), nrow=2, byrow=TRUE)
+f.dir = c( ">=", ">=")
+f.rhs = c(10, 5)
+ 
+XYsolution = lp (direction = "min", f.obj, f.con, f.dir, f.rhs)
+
+print(XYsolution)
+
+# how many X and Y?
+print(XYsolution$solution)
+
+# add constraint x>=3
+f.con = matrix(c(3, 1, 1, 1, 1, 0), nrow=3, byrow=TRUE)
+f.dir = c( ">=", ">=", ">=")
+f.rhs = c(10, 5, 3)
 
 
+XYsolution2 = lp (direction = "min", f.obj, f.con, f.dir, f.rhs)
+print(XYsolution2)
+
+# how many X and Y?
+print(XYsolution2$solution)
+
+#Answer Q 1: The lowest minimum cost is 28, and the optimal value for X is 3 and for Y is 2. 
+
+  
+#------------------------------------------------
+#Qustion 2:
+
+#  find a solution to 
+#Maximize 6x + 5y, subject to
+#x + y <= 5
+#3x + 2y <= 12
+
+
+# solve our X and Y:
+f.obj = c(6, 5)
+f.con = matrix(c(1, 1, 3, 2), nrow=2, byrow=TRUE)
+f.dir = c( "<=", "<=")
+f.rhs = c(5, 12)
+
+XYsolution = lp (direction = "max", f.obj, f.con, f.dir, f.rhs)
+
+print(XYsolution)
+
+# how many X and Y?
+print(XYsolution$solution)
+# Answer is  2 for X and 3 for Y
+
+#------------------------------------------------
+#Qustion 3:
+
+#  find a solution to 
+#Minimize 4x + y, subject to
+#3x+y >= 10
+#x + y >= 5
+#x >= 3
+
+
+# solve our X and Y:
+f.obj = c(4, 1)
+f.con = matrix(c(3, 1, 1, 1), nrow=2, byrow=TRUE)
+f.dir = c( ">=", ">=")
+f.rhs = c(10, 5)
+
+XYsolution = lp (direction = "min", f.obj, f.con, f.dir, f.rhs)
+
+print(XYsolution)
+
+# how many X and Y?
+print(XYsolution$solution)
+
+# add constraint x>=3
+f.con = matrix(c(3, 1, 1, 1, 1, 0), nrow=3, byrow=TRUE)
+f.dir = c( ">=", ">=", ">=")
+f.rhs = c(10, 5, 3)
+
+
+XYsolution2 = lp (direction = "min", f.obj, f.con, f.dir, f.rhs)
+print(XYsolution2)
+
+# how many X and Y?
+print(XYsolution2$solution)
+
+#Answer Q 3 . 3 for X and 2 for Y
